@@ -1,0 +1,331 @@
+STUDENTS TABLE FOR Data Structures Java COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1135632 |	 Keira Knightly
+1136578 |	 Tom Hardy
+1139999 |	 Amal Mohammad
+1146542 |	 Kevin Hart
+1159999 |	 Ahmad Ali
+------------------------------------------------------
+
+STUDENTS TABLE FOR Algorithms COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1135632 |	 Keira Knightly
+1136578 |	 Tom Hardy
+1139999 |	 Amal Mohammad
+1140932 |	 Tuqa Nawareh
+1145213 |	 Donia Khaled
+1146542 |	 Kevin Hart
+1146574 |	 Natalie Portman
+------------------------------------------------------
+
+STUDENTS TABLE FOR Introduction to programming COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1111111 |	 Wael Remawi
+1136578 |	 Tom Hardy
+1137632 |	 Deema Ahmad
+1145283 |	 Rawand Sbeh
+1153957 |	 Taim Tamimi
+1154936 |	 Muna Rami
+1169876 |	 Emma Stone
+------------------------------------------------------
+
+STUDENTS TABLE FOR INTRODUCTION TO COMPUTER COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1134321 |	 Huda Jameel
+1145213 |	 Donia Khaled
+1148425 |	 Mahmod Odeh
+1153256 |	 Fadi Awwad
+1153957 |	 Taim Tamimi
+1159832 |	 Seema Quraan
+1159873 |	 Hala Salameh
+------------------------------------------------------
+
+STUDENTS TABLE FOR INTRODUCTION TO COMPUTER COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1111111 |	 Wael Remawi
+1129745 |	 Saleh Kharoubi
+1136754 |	 Aseel Jubeh
+1150683 |	 Reem Naqeeb
+1153957 |	 Taim Tamimi
+------------------------------------------------------
+
+STUDENTS TABLE FOR INTRODUCTION TO COMPUTERS AND COMPUTING ETHICS COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1127632 |	 Rinad Ahmad
+1129745 |	 Saleh Kharoubi
+1134321 |	 Huda Jameel
+------------------------------------------------------
+
+STUDENTS TABLE FOR COMPUTER AND PROGRAMMING COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1126573 |	 Brad Pitt
+1130043 |	 Yara Basel
+1136754 |	 Aseel Jubeh
+1146542 |	 Kevin Hart
+------------------------------------------------------
+
+STUDENTS TABLE FOR COMPUTER AND PROGRAMMING COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1136578 |	 Daniel Radcliffe
+1146574 |	 Natalie Portman
+1148425 |	 Mahmod Odeh
+------------------------------------------------------
+
+STUDENTS TABLE FOR ADVANCED PROGRAMMING COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1127632 |	 Rinad Ahmad
+1136578 |	 Tom Hardy
+------------------------------------------------------
+
+STUDENTS TABLE FOR DATA STRUCTURES COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1137632 |	 Deema Ahmad
+1140001 |	 Shahd Bashar
+------------------------------------------------------
+
+STUDENTS TABLE FOR DISCRETE MATHEMATICS COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1019876 |	 Johnny Depp
+1136578 |	 Daniel Radcliffe
+1143896 |	 Hani Saleh
+1154936 |	 Muna Rami
+1159832 |	 Seema Quraan
+------------------------------------------------------
+
+STUDENTS TABLE FOR SERIOUS GAMING ((SG) FUNDAMENTALS COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1126573 |	 Brad Pitt
+1130043 |	 Yara Basel
+------------------------------------------------------
+
+STUDENTS TABLE FOR DATA STRUCTURES COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1126573 |	 Ellen Page
+1130022 |	 Khaled Sabri
+1135632 |	 Miles Teller
+------------------------------------------------------
+
+STUDENTS TABLE FOR LINUX OPERATING SYSTEMS LAB COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1019876 |	 Johnny Depp
+1134321 |	 Huda Jameel
+1140932 |	 Tuqa Nawareh
+1143256 |	 Emilia Clarke
+1154936 |	 Muna Rami
+1156666 |	 Jon Snow
+1159873 |	 Hala Salameh
+------------------------------------------------------
+
+STUDENTS TABLE FOR HUMAN COMPUTER INTERACTION COURSE: 
+------------------------------------------------------
+No Students Have Registered is This Course!
+-----------------------------------------------------
+
+STUDENTS TABLE FOR DATABASE SYSTEMS COURSE: 
+------------------------------------------------------
+No Students Have Registered is This Course!
+-----------------------------------------------------
+
+STUDENTS TABLE FOR WEB APPLICATION AND TECHNOLOGY COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1126548 |	 Shailene Woodley
+1137632 |	 Deema Ahmad
+------------------------------------------------------
+
+STUDENTS TABLE FOR ANIMATION COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1126573 |	 Ellen Page
+------------------------------------------------------
+
+STUDENTS TABLE FOR CONTENT CREATION AND LEVEL DESIGN COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1118759 |	 Mark Ruffalo
+1130022 |	 Khaled Sabri
+1143256 |	 Emilia Clarke
+------------------------------------------------------
+
+STUDENTS TABLE FOR ARTIFICIAL INTELLIGENCE COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1118759 |	 Mark Ruffalo
+1126548 |	 Shailene Woodley
+1126573 |	 Ellen Page
+------------------------------------------------------
+
+STUDENTS TABLE FOR INTRODUCTION TO GRADUATION PROJECT COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1126548 |	 Shailene Woodley
+1126573 |	 Brad Pitt
+1139999 |	 Amal Mohammad
+1143256 |	 Emilia Clarke
+1151111 |	 Anne Hathaway
+1168743 |	 Mohammad Sabri
+------------------------------------------------------
+
+STUDENTS TABLE FOR GRADUATION PROJECT COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1118764 |	 Matt Damon
+1127632 |	 Rinad Ahmad
+------------------------------------------------------
+
+STUDENTS TABLE FOR OPERATING SYSTEMS COURSE: 
+------------------------------------------------------
+No Students Have Registered is This Course!
+-----------------------------------------------------
+
+STUDENTS TABLE FOR COMPUTER SECURITY COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1019876 |	 Johnny Depp
+------------------------------------------------------
+
+STUDENTS TABLE FOR SOFTWARE ENGINEERING COURSE: 
+------------------------------------------------------
+No Students Have Registered is This Course!
+-----------------------------------------------------
+
+STUDENTS TABLE FOR COMPILER CONSTRUCTION COURSE: 
+------------------------------------------------------
+ID 	|	 Name
+------------------------------------------------------
+1118759 |	 Mark Ruffalo
+1118764 |	 Matt Damon
+1137632 |	 Deema Ahmad
+1142578 |	 Mark Walhlberg
+1150007 |	 Ahmad Sawi
+1156784 |	 Jennifer Lawrance
+------------------------------------------------------
+
+ALL STUDENTS IN ALL COURSES
+---------------------------------
+ID 	|	 Name
+---------------------------------
+1166983 |	Adam Waheedi
+1159999 |	Ahmad Ali
+1150007 |	Ahmad Sawi
+1139999 |	Amal Mohammad
+1151111 |	Anne Hathaway
+1136754 |	Aseel Jubeh
+1126573 |	Brad Pitt
+1136578 |	Daniel Radcliffe
+1137632 |	Deema Ahmad
+1145213 |	Donia Khaled
+1167653 |	Dylan O'Brien
+1143256 |	Emilia Clarke
+1169876 |	Emma Stone
+1169875 |	Emma Watson
+1153256 |	Fadi Awwad
+1164561 |	George Clooney
+1159873 |	Hala Salameh
+1143896 |	Hani Saleh
+1134321 |	Huda Jameel
+1166666 |	Jameel Ahmad
+1156784 |	Jennifer Lawrance
+1019876 |	Johnny Depp
+1156666 |	Jon Snow
+1135632 |	Keira Knightly
+1146542 |	Kevin Hart
+1169999 |	Khaled Mahmoud
+1130022 |	Khaled Sabri
+1152561 |	Khulood Sabri
+1165429 |	Leonardo Dicaprio
+1148425 |	Mahmod Odeh
+1118759 |	Mark Ruffalo
+1142578 |	Mark Walhlberg
+1118764 |	Matt Damon
+1168743 |	Mohammad Sabri
+1154936 |	Muna Rami
+1146574 |	Natalie Portman
+1167384 |	Rami Sami
+1145283 |	Rawand Sbeh
+1150683 |	Reem Naqeeb
+1127632 |	Rinad Ahmad
+1129745 |	Saleh Kharoubi
+1159832 |	Seema Quraan
+1140001 |	Shahd Bashar
+1126548 |	Shailene Woodley
+1153957 |	Taim Tamimi
+1164354 |	Taqwa Adham
+1140932 |	Tuqa Nawareh
+1111111 |	Wael Remawi
+1130043 |	Yara Basel
+---------------------------------
+
+ALL COURSES
+------------------------------------------------------------------
+ID 	    | Name			   |	 Students Enrolled
+------------------------------------------------------------------
+COMP333     | DATABASE SYSTEMS             |	 0
+COMP3351     | ANIMATION                    |	 1
+COMP431     | OPERATING SYSTEMS            |	 0
+COMP432     | COMPUTER SECURITY            |	 1
+COMP131     | INTRODUCTION TO COMPUTERS AND COMPUTING ETHICS |	 3
+COMP334     | WEB APPLICATION AND TECHNOLOGY |	 2
+COMP231     | ADVANCED PROGRAMMING         |	 2
+COMP2331     | SERIOUS GAMING ((SG) FUNDAMENTALS |	 2
+COMP332     | HUMAN COMPUTER INTERACTION   |	 0
+COMP433     | SOFTWARE ENGINEERING         |	 0
+COMP232     | DATA STRUCTURES              |	 3
+COMP3361     | CONTENT CREATION AND LEVEL DESIGN |	 3
+COMP422     | GRADUATION PROJECT           |	 2
+COMP336     | Algorithms                   |	 7
+COMP2321     | DATA STRUCTURES              |	 2
+COMP230     | COMPUTER AND PROGRAMMING     |	 3
+COMP142     | COMPUTER AND PROGRAMMING     |	 4
+COMP121     | INTRODUCTION TO COMPUTER     |	 7
+COMP338     | ARTIFICIAL INTELLIGENCE      |	 3
+COMP311     | LINUX OPERATING SYSTEMS LAB  |	 7
+COMP122     | INTRODUCTION TO COMPUTER     |	 5
+COMP242     | Data Structures Java         |	 5
+COMP233     | DISCRETE MATHEMATICS         |	 5
+COMP439     | COMPILER CONSTRUCTION        |	 6
+COMP411     | INTRODUCTION TO GRADUATION PROJECT |	 6
+COMP133     | Introduction to programming  |	 7
+------------------------------------------------------------------
+
+Schedule For: Ahmad Sawi
+------------------------------------------------------------------------------
+Hour:| 8     | 9     | 10    | 11    | 12    | 1pm   | 2pm   | 3pm   | 4pm   |
+------------------------------------------------------------------------------
+     |COMP439|       |       |       |       |       |       |       |       |
+------------------------------------------------------------------------------

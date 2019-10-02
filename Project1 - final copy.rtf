@@ -1,0 +1,1117 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf810
+{\fonttbl\f0\fnil\fcharset0 Menlo-Italic;\f1\fnil\fcharset0 Menlo-Regular;\f2\fnil\fcharset0 Menlo-Bold;
+}
+{\colortbl;\red255\green255\blue255;\red109\green109\blue109;\red109\green111\blue5;\red15\green112\blue3;
+\red25\green68\blue35;\red0\green0\blue254;\red0\green0\blue109;\red14\green110\blue109;\red82\green0\blue103;
+\red41\green15\blue109;}
+{\*\expandedcolortbl;;\csgenericrgb\c42745\c42745\c42745;\csgenericrgb\c42745\c43529\c1961;\csgenericrgb\c5882\c43922\c1176;
+\csgenericrgb\c9804\c26667\c13725;\csgenericrgb\c0\c0\c99608;\csgenericrgb\c0\c0\c42745;\csgenericrgb\c5490\c43137\c42745;\csgenericrgb\c32157\c0\c40392;
+\csgenericrgb\c16078\c5882\c42745;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28600\viewh15340\viewkind0
+\pard\tx0\tx0\tx0\tx0\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\tx28600\pardirnatural\partightenfactor0
+
+\f0\i\fs24 \cf2 /*\uc0\u8232  * Summary:\u8232  *  this application works as a registration system for Birzeit Universiry Computer Science department. it takes two files one for the courses\u8232  *  that the department is offering and the other for the students and what they want to register. and it returns a report file that includes\u8232  *  registration info the head of the department requiers.\u8232  * */\u8232 \u8232 
+\f1\i0 \cf3 #include
+\f2\b \cf4  <stdio.h>\uc0\u8232 
+\f1\b0 \cf3 #include
+\f2\b \cf4  <stdlib.h>\uc0\u8232 
+\f1\b0 \cf3 #include
+\f2\b \cf4  <string.h>\uc0\u8232 
+\f1\b0 \cf3 #include
+\f2\b \cf4  <stdbool.h>\uc0\u8232 \u8232 
+\f1\b0 \cf3 #define 
+\f2\b \cf5 STUDENTNAMELENGTH 
+\f1\b0 \cf6 20        
+\f0\i \cf2 //self explanatory macros. to be used for strings!\uc0\u8232 
+\f1\i0 \cf3 #define 
+\f2\b \cf5 COURSENAMELENGTH 
+\f1\b0 \cf6 50\uc0\u8232 \cf3 #define 
+\f2\b \cf5 SCANNEDSTRINGMAXLENGTH 
+\f1\b0 \cf6 200\uc0\u8232 \cf3 #define 
+\f2\b \cf5 IDSIZE 
+\f1\b0 \cf6 8\uc0\u8232 \cf3 #define 
+\f2\b \cf5 CLOCKARRAYSIZE 
+\f1\b0 \cf6 9\uc0\u8232 
+\f0\i \cf2 //#define PATHLENGTH   50\uc0\u8232 \u8232 
+\f2\i0\b \cf7 struct 
+\f1\b0 \cf8 student\cf0 \{\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf9 id\cf0 ;\uc0\u8232     
+\f2\b \cf7 char 
+\f1\b0 \cf9 name\cf0 [
+\f2\b \cf5 STUDENTNAMELENGTH
+\f1\b0 \cf0 ];\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf9 coursesIndexes\cf0 [\cf6 5\cf0 ];\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf9 numberOfCoursesRegistered\cf0 ;\uc0\u8232     
+\f2\b \cf7 struct 
+\f1\b0 \cf8 student\cf0 * \cf9 next\cf0 ;\uc0\u8232 \};\u8232 \u8232 
+\f2\b \cf7 typedef struct 
+\f1\b0 \cf8 student \cf10 student_t\cf0 ;\uc0\u8232 
+\f2\b \cf7 typedef 
+\f1\b0 \cf10 student_t \cf0 *\cf10 p2s\cf0 ;\uc0\u8232 
+\f2\b \cf7 typedef 
+\f1\b0 \cf10 p2s List\cf0 ;\uc0\u8232 
+\f2\b \cf7 typedef 
+\f1\b0 \cf10 p2s Position\cf0 ;\uc0\u8232 \u8232 \u8232 
+\f2\b \cf7 struct 
+\f1\b0 \cf8 course\cf0 \{                                 
+\f0\i \cf2 //course struct to hold info for courses and a list of the students in thsat course\uc0\u8232     
+\f2\i0\b \cf7 char 
+\f1\b0 \cf9 name\cf0 [
+\f2\b \cf5 COURSENAMELENGTH
+\f1\b0 \cf0 ], \cf9 id\cf0 [
+\f2\b \cf5 IDSIZE
+\f1\b0 \cf0 ];   
+\f0\i \cf2 //a course is assumed to be 7 letters only "COMP" followed by 3 letters\uc0\u8232     
+\f2\i0\b \cf7 short 
+\f1\b0 \cf9 maxStudents\cf0 , \cf9 year\cf0 ;\uc0\u8232     
+\f2\b \cf7 double 
+\f1\b0 \cf9 startTime\cf0 , \cf9 finishTime\cf0 ;\uc0\u8232     \cf10 List \cf9 students\cf0 ;\uc0\u8232 \};\u8232 \u8232 
+\f2\b \cf7 typedef struct 
+\f1\b0 \cf8 course \cf10 course_t\cf0 ;\uc0\u8232 \u8232 
+\f2\b \cf7 int 
+\f1\b0 \cf0 fileLineCount(\cf10 FILE\cf0 *);                                              
+\f0\i \cf2 //counts how many lines are there in a file\uc0\u8232 
+\f2\i0\b \cf7 void 
+\f1\b0 \cf0 getFromFile(\cf10 FILE\cf0 *, 
+\f2\b \cf7 char
+\f1\b0 \cf0 [][
+\f2\b \cf5 SCANNEDSTRINGMAXLENGTH
+\f1\b0 \cf0 ]);               
+\f0\i \cf2 //gets everything in a file and stors it in an array of strings\uc0\u8232 
+\f2\i0\b \cf7 void 
+\f1\b0 \cf0 makeDot(
+\f2\b \cf7 char
+\f1\b0 \cf0 []);                                                  
+\f0\i \cf2 //makes ':' a '.'\uc0\u8232 
+\f2\i0\b \cf5 bool 
+\f1\b0 \cf0 fillCourseArrayFromFile(\cf10 course_t\cf0 [], \cf10 FILE\cf0 *, 
+\f2\b \cf7 int
+\f1\b0 \cf0 );                  
+\f0\i \cf2 //fills the array of courses with the courses info from file\uc0\u8232 
+\f2\i0\b \cf7 void 
+\f1\b0 \cf0 removeNonCOMPCourses(\cf10 course_t\cf0 [], 
+\f2\b \cf7 int
+\f1\b0 \cf0 *);                           
+\f0\i \cf2 //removes courses that dont start with COMP from courses array\uc0\u8232 
+\f2\i0\b \cf7 void 
+\f1\b0 \cf0 removeSpace(
+\f2\b \cf7 char
+\f1\b0 \cf0 []);                                              
+\f0\i \cf2 //removes ' '\uc0\u8232 
+\f2\i0\b \cf7 void 
+\f1\b0 \cf0 removeNewLine(
+\f2\b \cf7 char
+\f1\b0 \cf0 []);                                            
+\f0\i \cf2 //removes '\\n'\uc0\u8232 
+\f2\i0\b \cf5 bool 
+\f1\b0 \cf0 isCourseOffered(
+\f2\b \cf7 char
+\f1\b0 \cf0 [], \cf10 course_t\cf0 [], 
+\f2\b \cf7 int
+\f1\b0 \cf0 );                         
+\f0\i \cf2 //checks if a course is one of the array of courses by its ID\uc0\u8232 
+\f2\i0\b \cf7 int 
+\f1\b0 \cf0 findAddressOfCourse(
+\f2\b \cf7 char
+\f1\b0 \cf0 [], \cf10 course_t\cf0 [], 
+\f2\b \cf7 int
+\f1\b0 \cf0 );                      
+\f0\i \cf2 //returns the address of the course given the ID of\uc0\u8232 
+\f2\i0\b \cf5 bool 
+\f1\b0 \cf0 isAllowedToRegister(
+\f2\b \cf7 int
+\f1\b0 \cf0 , 
+\f2\b \cf7 int
+\f1\b0 \cf0 , \cf10 course_t\cf0 []);                        
+\f0\i \cf2 //checks if a student is allowed to register by year\uc0\u8232 
+\f2\i0\b \cf7 int 
+\f1\b0 \cf0 studentsInCourse(\cf10 List\cf0 );                                            
+\f0\i \cf2 //returns the number of students enrolled\uc0\u8232 
+\f2\i0\b \cf7 int 
+\f1\b0 \cf0 maxStudentsInCourse(
+\f2\b \cf7 int
+\f1\b0 \cf0 , \cf10 course_t\cf0 []);                              
+\f0\i \cf2 //returns the maximum students allowed to register in a course\uc0\u8232 
+\f2\i0\b \cf7 void 
+\f1\b0 \cf0 initiateClockArray(
+\f2\b \cf5 bool
+\f1\b0 \cf0 []);                                       
+\f0\i \cf2 //sets all clock array values to false\uc0\u8232 
+\f2\i0\b \cf7 int 
+\f1\b0 \cf0 getAddressForClock(
+\f2\b \cf7 double
+\f1\b0 \cf0 );                                        
+\f0\i \cf2 //returns a suitable address based on\uc0\u8232 
+\f2\i0\b \cf7 void 
+\f1\b0 \cf0 fillClockArray(
+\f2\b \cf5 bool
+\f1\b0 \cf0 [], 
+\f2\b \cf7 double
+\f1\b0 \cf0 , 
+\f2\b \cf7 double
+\f1\b0 \cf0 );                           
+\f0\i \cf2 //fills the addresses in the interval given with true\uc0\u8232 
+\f2\i0\b \cf5 bool 
+\f1\b0 \cf0 isNotConflict(
+\f2\b \cf5 bool
+\f1\b0 \cf0 [], 
+\f2\b \cf7 int
+\f1\b0 \cf0 , \cf10 course_t\cf0 []);                           
+\f0\i \cf2 //checks if a student has a conflict in his schedule\uc0\u8232 
+\f2\i0\b \cf7 void 
+\f1\b0 \cf0 fillStudentsLinkedListFromFile(\cf10 course_t\cf0 [], \cf10 FILE\cf0 *,
+\f2\b \cf7 int
+\f1\b0 \cf0 , 
+\f2\b \cf7 int
+\f1\b0 \cf0 , \cf10 List\cf0 ); 
+\f0\i \cf2 //fills the students who want to register in a course in their lists\uc0\u8232 
+\f1\i0 \cf10 List \cf0 newHead();                                                        
+\f0\i \cf2 //makes a new head for a list of students\uc0\u8232 
+\f1\i0 \cf10 Position \cf0 newNode(
+\f2\b \cf7 char
+\f1\b0 \cf0 [], 
+\f2\b \cf7 int
+\f1\b0 \cf0 );                                         
+\f0\i \cf2 //makes a new node for a list of students\uc0\u8232 
+\f2\i0\b \cf5 bool 
+\f1\b0 \cf0 isEmpty(\cf10 List \cf0 L);                                                  
+\f0\i \cf2 //checks if a list is empty\uc0\u8232 
+\f2\i0\b \cf5 bool 
+\f1\b0 \cf0 isLast(\cf10 Position\cf0 );                                                 
+\f0\i \cf2 //checks if a certian node is the last one in a list\uc0\u8232 
+\f2\i0\b \cf7 void 
+\f1\b0 \cf0 deleteList(\cf10 List\cf0 );                                                 
+\f0\i \cf2 //deletes the list from memory but keeps the head\uc0\u8232 
+\f2\i0\b \cf5 bool 
+\f1\b0 \cf0 insertFirst(\cf10 List\cf0 , 
+\f2\b \cf7 char
+\f1\b0 \cf0 [], 
+\f2\b \cf7 int
+\f1\b0 \cf0 );                                   
+\f0\i \cf2 //inserts a node to a list in the first spot\uc0\u8232 
+\f2\i0\b \cf5 bool 
+\f1\b0 \cf0 insertLast(\cf10 List\cf0 , 
+\f2\b \cf7 char
+\f1\b0 \cf0 [], 
+\f2\b \cf7 int
+\f1\b0 \cf0 );                                    
+\f0\i \cf2 //inserts a node to the end of the list\uc0\u8232 
+\f2\i0\b \cf5 bool 
+\f1\b0 \cf0 insertAfter(\cf10 Position\cf0 , \cf10 Position\cf0 );                                  
+\f0\i \cf2 //inserts a node after a special possition\uc0\u8232 
+\f2\i0\b \cf5 bool 
+\f1\b0 \cf0 insertSorted(\cf10 List\cf0 , 
+\f2\b \cf7 char
+\f1\b0 \cf0 [
+\f2\b \cf5 STUDENTNAMELENGTH
+\f1\b0 \cf0 ], 
+\f2\b \cf7 int
+\f1\b0 \cf0 );                 
+\f0\i \cf2 //inserts a node based on a string value to its respective position\uc0\u8232 
+\f1\i0 \cf10 Position \cf0 findStudent(\cf10 List\cf0 , 
+\f2\b \cf7 int
+\f1\b0 \cf0 );                                       
+\f0\i \cf2 //finds and returns the position of a student from list\uc0\u8232 
+\f2\i0\b \cf7 void 
+\f1\b0 \cf0 initiateBuckets(\cf10 List\cf0 []);                                          
+\f0\i \cf2 //puts null pointers at the head of the buckets\uc0\u8232 
+\f2\i0\b \cf7 void 
+\f1\b0 \cf0 emptyBuckets(\cf10 List\cf0 []);                                             
+\f0\i \cf2 //empties and delets all buckets\uc0\u8232 
+\f1\i0 \cf10 List \cf0 radixMerge(\cf10 List\cf0 []);                                               
+\f0\i \cf2 //merges buckets into one list. to be used for radix sort\uc0\u8232 
+\f1\i0 \cf10 List \cf0 radixSortedList(\cf10 List\cf0 , 
+\f2\b \cf7 int
+\f1\b0 \cf0 );                                       
+\f0\i \cf2 //uses radix sort algorithm to sort a list\uc0\u8232 
+\f2\i0\b \cf7 void 
+\f1\b0 \cf0 sortCourses(\cf10 course_t\cf0 [], \cf10 course_t\cf0 [], 
+\f2\b \cf7 int
+\f1\b0 \cf0 );                         
+\f0\i \cf2 //uses the bubble sort to arrange an array of courses\uc0\u8232 
+\f2\i0\b \cf7 void 
+\f1\b0 \cf0 courseStudentsReport(\cf10 course_t\cf0 [], \cf10 FILE \cf0 *, 
+\f2\b \cf7 int
+\f1\b0 \cf0 );                    
+\f0\i \cf2 //reports to the report file the students registered in each course\uc0\u8232 
+\f2\i0\b \cf5 bool 
+\f1\b0 \cf0 studentScheduleReport(\cf10 FILE\cf0 *, \cf10 course_t\cf0 [], \cf10 List\cf0 , 
+\f2\b \cf7 int
+\f1\b0 \cf0 );              
+\f0\i \cf2 //prints a students scedule to the reports file\uc0\u8232 
+\f1\i0 \cf10 List \cf0 studentsUnion(\cf10 course_t\cf0 [], 
+\f2\b \cf7 int
+\f1\b0 \cf0 );                                   
+\f0\i \cf2 //groups all students ito one linked list\uc0\u8232 
+\f2\i0\b \cf5 bool 
+\f1\b0 \cf0 isNotAddedBefore(\cf10 List\cf0 , 
+\f2\b \cf7 int
+\f1\b0 \cf0 );                                      
+\f0\i \cf2 //checks if a students has already been added to the previous list\uc0\u8232 
+\f2\i0\b \cf7 void 
+\f1\b0 \cf0 allStudentsReport(\cf10 List \cf0 , \cf10 FILE\cf0 *);                                  
+\f0\i \cf2 //reports all the students in all courses\uc0\u8232 
+\f2\i0\b \cf7 void 
+\f1\b0 \cf0 allCoursesReport(\cf10 course_t\cf0 [], \cf10 FILE\cf0 *, 
+\f2\b \cf7 int
+\f1\b0 \cf0 );                         
+\f0\i \cf2 //reports all courses in the reports file\uc0\u8232 
+\f2\i0\b \cf7 void 
+\f1\b0 \cf0 fillClockWithIndex(
+\f2\b \cf7 int
+\f1\b0 \cf0 [], 
+\f2\b \cf7 double
+\f1\b0 \cf0 , 
+\f2\b \cf7 double
+\f1\b0 \cf0 , 
+\f2\b \cf7 int
+\f1\b0 \cf0 );                   
+\f0\i \cf2 //special function for schedual printing espeically when dealing with lab courses. it fills an array with the index of the course in the place of the clock it will take up\uc0\u8232 
+\f2\i0\b \cf7 int 
+\f1\b0 \cf0 openMenu();                                                        
+\f0\i \cf2 //Menu and caller for all other functions\uc0\u8232 \u8232 
+\f2\i0\b \cf7 int 
+\f1\b0 \cf0 main() \{\uc0\u8232     openMenu();\u8232     
+\f2\b \cf7 return 
+\f1\b0 \cf6 0\cf0 ;\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf7 int 
+\f1\b0 \cf0 fileLineCount(\cf10 FILE \cf0 *file)\{\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 count = \cf6 0\cf0 ;\uc0\u8232     
+\f2\b \cf7 char 
+\f1\b0 \cf0 ch;\uc0\u8232     
+\f2\b \cf7 do
+\f1\b0 \cf0 \{\uc0\u8232         ch = (
+\f2\b \cf7 char
+\f1\b0 \cf0 ) fgetc(file);\uc0\u8232         
+\f2\b \cf7 if
+\f1\b0 \cf0 (ch == 
+\f2\b \cf4 '\cf7 \\n\cf4 '
+\f1\b0 \cf0 )\uc0\u8232             count++;\u8232     \} 
+\f2\b \cf7 while 
+\f1\b0 \cf0 (!feof(file));\uc0\u8232     rewind(file);     
+\f0\i \cf2 //returns the cursor to the beginning of the file\uc0\u8232     
+\f2\i0\b \cf7 return 
+\f1\b0 \cf0 count+\cf6 1\cf0 ;   
+\f0\i \cf2 //+1 because it starts from 0\uc0\u8232 
+\f1\i0 \cf0 \}\uc0\u8232 \u8232 
+\f2\b \cf7 void 
+\f1\b0 \cf0 getFromFile(\cf10 FILE \cf0 *file, 
+\f2\b \cf7 char 
+\f1\b0 \cf0 ret[][
+\f2\b \cf5 SCANNEDSTRINGMAXLENGTH
+\f1\b0 \cf0 ])\{\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 i = \cf6 0\cf0 ;\uc0\u8232     
+\f2\b \cf7 char 
+\f1\b0 \cf0 buffer[
+\f2\b \cf5 SCANNEDSTRINGMAXLENGTH
+\f1\b0 \cf0 ];\uc0\u8232     
+\f2\b \cf7 while 
+\f1\b0 \cf0 (fgets(buffer, 
+\f2\b \cf5 SCANNEDSTRINGMAXLENGTH
+\f1\b0 \cf0 , file) != 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 )\uc0\u8232         
+\f2\b \cf5 strcpy
+\f1\b0 \cf0 (ret[i++],buffer);\uc0\u8232     fclose(file);\u8232 \}\u8232 \u8232 
+\f2\b \cf7 void 
+\f1\b0 \cf0 makeDot(
+\f2\b \cf7 char 
+\f1\b0 \cf0 s[])\{\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 i = \cf6 0\cf0 ;\uc0\u8232     
+\f2\b \cf7 for 
+\f1\b0 \cf0 (i = \cf6 0\cf0 ; i < strlen(s); ++i) \{\uc0\u8232         
+\f2\b \cf7 if
+\f1\b0 \cf0 (s[i] == 
+\f2\b \cf4 ':'
+\f1\b0 \cf0 )\uc0\u8232             s[i] = 
+\f2\b \cf4 '.'
+\f1\b0 \cf0 ;\uc0\u8232     \}\u8232 \}\u8232 \u8232 \u8232 
+\f2\b \cf5 bool 
+\f1\b0 \cf0 fillCourseArrayFromFile(\cf10 course_t \cf0 coursesArray[], \cf10 FILE \cf0 *coursesFile, 
+\f2\b \cf7 int 
+\f1\b0 \cf0 numberOfCourses)\{\uc0\u8232 \u8232     
+\f2\b \cf7 char 
+\f1\b0 \cf0 coursesStringsArray[numberOfCourses][
+\f2\b \cf5 SCANNEDSTRINGMAXLENGTH
+\f1\b0 \cf0 ];\uc0\u8232     getFromFile(coursesFile, coursesStringsArray);\u8232 \u8232     
+\f2\b \cf7 char 
+\f1\b0 \cf0 data[\cf6 6\cf0 ][
+\f2\b \cf5 COURSENAMELENGTH
+\f1\b0 \cf0 ];\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 q = \cf6 0\cf0 , j = \cf6 0\cf0 ;\uc0\u8232 \u8232     
+\f2\b \cf7 for 
+\f1\b0 \cf0 (j = \cf6 0\cf0 ; j < numberOfCourses; j++) \{\uc0\u8232 \u8232         
+\f2\b \cf7 char 
+\f1\b0 \cf0 *token;\uc0\u8232         token = strtok(coursesStringsArray[j], 
+\f2\b \cf4 "#"
+\f1\b0 \cf0 );\uc0\u8232         q = \cf6 0\cf0 ;\uc0\u8232         
+\f2\b \cf7 while
+\f1\b0 \cf0 (token != 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 )\{\uc0\u8232             
+\f2\b \cf5 strcpy
+\f1\b0 \cf0 (data[q++], token);\uc0\u8232             token = strtok(
+\f2\b \cf5 NULL
+\f1\b0 \cf0 , 
+\f2\b \cf4 "#"
+\f1\b0 \cf0 );\uc0\u8232         \}\u8232 \u8232         
+\f2\b \cf5 strcpy
+\f1\b0 \cf0 (coursesArray[j].\cf9 name\cf0 , data[\cf6 0\cf0 ]);\uc0\u8232         
+\f2\b \cf5 strcpy
+\f1\b0 \cf0 (coursesArray[j].\cf9 id\cf0 , data[\cf6 1\cf0 ]);\uc0\u8232         coursesArray[j].\cf9 year \cf0 = (
+\f2\b \cf7 short
+\f1\b0 \cf0 ) atoi(data[\cf6 2\cf0 ]);\uc0\u8232         makeDot(data[\cf6 3\cf0 ]);\uc0\u8232         coursesArray[j].\cf9 startTime \cf0 = atof(data[\cf6 3\cf0 ]);\uc0\u8232         makeDot(data[\cf6 4\cf0 ]);\uc0\u8232         coursesArray[j].\cf9 finishTime \cf0 = atof(data[\cf6 4\cf0 ]);\uc0\u8232         coursesArray[j].\cf9 maxStudents \cf0 = (
+\f2\b \cf7 short
+\f1\b0 \cf0 ) atoi(data[\cf6 5\cf0 ]);\uc0\u8232         coursesArray[j].\cf9 students \cf0 = (\cf10 List\cf0 ) malloc(
+\f2\b \cf7 sizeof
+\f1\b0 \cf0 (\cf10 student_t\cf0 ));\uc0\u8232         
+\f2\b \cf7 if
+\f1\b0 \cf0 (coursesArray[j].\cf9 students \cf0 == 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 ) \{                         
+\f0\i \cf2 //checks if the malloc worked properly\uc0\u8232             
+\f1\i0 \cf0 printf(
+\f2\b \cf4 "OUT OF RAM! malloc related error"
+\f1\b0 \cf0 );\uc0\u8232             
+\f2\b \cf7 return \cf5 false
+\f1\b0 \cf0 ;\uc0\u8232         \}\u8232         coursesArray[j].\cf9 students\cf0 ->\cf9 next \cf0 = 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 ;\uc0\u8232     \}\u8232     
+\f2\b \cf7 return \cf5 true
+\f1\b0 \cf0 ;\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf7 void 
+\f1\b0 \cf0 removeNonCOMPCourses(\cf10 course_t \cf0 ocrss[], 
+\f2\b \cf7 int 
+\f1\b0 \cf0 *numberOfCourses)\{\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 i = \cf6 0\cf0 , k = \cf6 0\cf0 ;\uc0\u8232     
+\f2\b \cf7 char 
+\f1\b0 \cf0 substring[\cf6 5\cf0 ] = 
+\f2\b \cf4 ""
+\f1\b0 \cf0 ;\uc0\u8232     
+\f2\b \cf7 for 
+\f1\b0 \cf0 (i = \cf6 0\cf0 ; i < *numberOfCourses; i++)\{\uc0\u8232         
+\f2\b \cf5 strncat
+\f1\b0 \cf0 (substring, ocrss[i].\cf9 id\cf0 , \cf6 4\cf0 );\uc0\u8232         
+\f2\b \cf7 if
+\f1\b0 \cf0 ( strcmp(substring, 
+\f2\b \cf4 "COMP"
+\f1\b0 \cf0 ) != \cf6 0 \cf0 )\{\uc0\u8232             
+\f2\b \cf7 for 
+\f1\b0 \cf0 (k = i; k < *numberOfCourses; k++)\{\uc0\u8232                 ocrss[k] = ocrss[k+\cf6 1\cf0 ];\uc0\u8232             \}\u8232             *numberOfCourses = *numberOfCourses - \cf6 1\cf0 ;\uc0\u8232         \}\u8232 \u8232         
+\f2\b \cf5 strcpy
+\f1\b0 \cf0 (substring ,
+\f2\b \cf4 ""
+\f1\b0 \cf0 );\uc0\u8232     \}\u8232 \}\u8232 \u8232 
+\f2\b \cf7 void 
+\f1\b0 \cf0 removeSpace(
+\f2\b \cf7 char 
+\f1\b0 \cf0 s[])\{\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 i = \cf6 0\cf0 , k = \cf6 0\cf0 ;\uc0\u8232     
+\f2\b \cf7 for
+\f1\b0 \cf0 (i = \cf6 0\cf0 ; i < strlen(s); i++)\{\uc0\u8232         
+\f2\b \cf7 if
+\f1\b0 \cf0 (s[i] == 
+\f2\b \cf4 ' '
+\f1\b0 \cf0 )\{\uc0\u8232             
+\f2\b \cf7 for
+\f1\b0 \cf0 (k = i; k < strlen(s); k++)\{  
+\f0\i \cf2 //shifting all characters so we have a tidy string when space is removed\uc0\u8232                 
+\f1\i0 \cf0 s[k] = s[k+\cf6 1\cf0 ];\uc0\u8232             \}\u8232             s[k-\cf6 1\cf0 ] = 
+\f2\b \cf4 '\cf7 \\0\cf4 '
+\f1\b0 \cf0 ;   
+\f0\i \cf2 //setting last element to null so it declares the end of the list\uc0\u8232         
+\f1\i0 \cf0 \}\uc0\u8232     \}\u8232 \}\u8232 \u8232 
+\f2\b \cf7 void 
+\f1\b0 \cf0 removeNewLine(
+\f2\b \cf7 char 
+\f1\b0 \cf0 s[])\{   
+\f0\i \cf2 //same as removeSpace\uc0\u8232     
+\f2\i0\b \cf7 int 
+\f1\b0 \cf0 i = \cf6 0\cf0 , k = \cf6 0\cf0 ;\uc0\u8232     
+\f2\b \cf7 for
+\f1\b0 \cf0 (i = \cf6 0\cf0 ; i < strlen(s); i++)\{\uc0\u8232         
+\f2\b \cf7 if
+\f1\b0 \cf0 (s[i] == 
+\f2\b \cf4 '\cf7 \\n\cf4 '
+\f1\b0 \cf0 )\{\uc0\u8232             
+\f2\b \cf7 for
+\f1\b0 \cf0 (k = i; k < strlen(s); k++)\{\uc0\u8232                 s[k] = s[k+\cf6 1\cf0 ];\uc0\u8232             \}\u8232             s[k-\cf6 1\cf0 ] = 
+\f2\b \cf4 '\cf7 \\0\cf4 '
+\f1\b0 \cf0 ;\uc0\u8232         \}\u8232     \}\u8232 \}\u8232 \u8232 
+\f2\b \cf7 int 
+\f1\b0 \cf0 findAddressOfCourse(
+\f2\b \cf7 char 
+\f1\b0 \cf0 crs[], \cf10 course_t \cf0 ocrss[], 
+\f2\b \cf7 int 
+\f1\b0 \cf0 numberOfOfferedCourses)\{\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 i = \cf6 0\cf0 ;\uc0\u8232     
+\f2\b \cf7 for
+\f1\b0 \cf0 (i = \cf6 0\cf0 ; i < numberOfOfferedCourses; i++)\{\uc0\u8232         
+\f2\b \cf7 if
+\f1\b0 \cf0 ( strcmp(ocrss[i].\cf9 id\cf0 , crs) == \cf6 0 \cf0 )\uc0\u8232             
+\f2\b \cf7 return 
+\f1\b0 \cf0 i;\uc0\u8232     \}\u8232     
+\f2\b \cf7 return 
+\f1\b0 \cf0 -\cf6 1\cf0 ;    
+\f0\i \cf2 //to identify a course not being found\uc0\u8232 
+\f1\i0 \cf0 \}\uc0\u8232 \u8232 
+\f2\b \cf5 bool 
+\f1\b0 \cf0 isCourseOffered(
+\f2\b \cf7 char 
+\f1\b0 \cf0 crs[], \cf10 course_t \cf0 ocrss[], 
+\f2\b \cf7 int 
+\f1\b0 \cf0 numberOfOfferedCourses)\{\uc0\u8232     
+\f2\b \cf7 if
+\f1\b0 \cf0 (findAddressOfCourse(crs, ocrss, numberOfOfferedCourses) < \cf6 0\cf0 )\uc0\u8232         
+\f2\b \cf7 return \cf5 false
+\f1\b0 \cf0 ;\uc0\u8232     
+\f2\b \cf7 else\uc0\u8232         return \cf5 true
+\f1\b0 \cf0 ;\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf5 bool 
+\f1\b0 \cf0 isAllowedToRegister(
+\f2\b \cf7 int 
+\f1\b0 \cf0 stNumber, 
+\f2\b \cf7 int 
+\f1\b0 \cf0 addressOfcrs, \cf10 course_t \cf0 ocrss[])\{\uc0\u8232     
+\f2\b \cf7 if
+\f1\b0 \cf0 (addressOfcrs < \cf6 0\cf0 )\uc0\u8232         
+\f2\b \cf7 return \cf5 false
+\f1\b0 \cf0 ;\uc0\u8232     
+\f2\b \cf7 else if
+\f1\b0 \cf0 (stNumber <= ((ocrss[addressOfcrs].\cf9 year\cf0 )*\cf6 10000 \cf0 + \cf6 9999\cf0 ) )  
+\f0\i \cf2 //checks the year to be bigger of equal to the one in course\uc0\u8232         
+\f2\i0\b \cf7 return \cf5 true
+\f1\b0 \cf0 ;\uc0\u8232 \u8232     
+\f2\b \cf7 else\uc0\u8232         return \cf5 false
+\f1\b0 \cf0 ;\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf7 int 
+\f1\b0 \cf0 studentsInCourse(\cf10 List \cf0 L)\{\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 counter = \cf6 0\cf0 ;\uc0\u8232     \cf10 Position \cf0 p = L;\uc0\u8232     
+\f2\b \cf7 while
+\f1\b0 \cf0 (p->\cf9 next \cf0 != 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 )\{\uc0\u8232         counter++;\u8232         p = p->\cf9 next\cf0 ;\uc0\u8232     \}\u8232     
+\f2\b \cf7 return 
+\f1\b0 \cf0 counter;\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf7 int 
+\f1\b0 \cf0 maxStudentsInCourse(
+\f2\b \cf7 int 
+\f1\b0 \cf0 index, \cf10 course_t \cf0 ocrss[])\{  
+\f0\i \cf2 //ocrss stands for Offered Courses\uc0\u8232     
+\f2\i0\b \cf7 return 
+\f1\b0 \cf0 (ocrss[index].\cf9 maxStudents\cf0 );\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf7 void 
+\f1\b0 \cf0 initiateClockArray(
+\f2\b \cf5 bool 
+\f1\b0 \cf0 clk[
+\f2\b \cf5 CLOCKARRAYSIZE
+\f1\b0 \cf0 ])\{\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 i = \cf6 0\cf0 ;\uc0\u8232     
+\f2\b \cf7 for
+\f1\b0 \cf0 (i = \cf6 0\cf0 ; i < 
+\f2\b \cf5 CLOCKARRAYSIZE
+\f1\b0 \cf0 ; i++)\uc0\u8232         clk[i] = 
+\f2\b \cf5 false
+\f1\b0 \cf0 ;\uc0\u8232 \}\u8232 \u8232 
+\f0\i \cf2 /*\uc0\u8232      * note: it has been assumed that there cant be a schedule with courses that have no breaks in between, like 11 - 12:30 & 12:30 - 2pm\u8232      * key: index | time of day\u8232      * 0 | 8 - 9\u8232      * 1 | 9 - 10\u8232      * 2 | 10 - 11\u8232      * 3 | 11 - 12\u8232      * 4 | 12 - 1pm\u8232      * 5 | 1pm - 2pm\u8232      * 6 | 2pm - 3pm\u8232      * 7 | 3pm - 4pm\u8232      * 8 | 4pm - 5pm\u8232      * -1 if wrong time or time where there should be no classes\u8232      * */\u8232 
+\f2\i0\b \cf7 int 
+\f1\b0 \cf0 getAddressForClock(
+\f2\b \cf7 double 
+\f1\b0 \cf0 time)\{\uc0\u8232     
+\f2\b \cf7 if
+\f1\b0 \cf0 (time >= \cf6 8.0 \cf0 && time < \cf6 9.0\cf0 )\uc0\u8232         
+\f2\b \cf7 return 
+\f1\b0 \cf6 0\cf0 ;\uc0\u8232     
+\f2\b \cf7 else if
+\f1\b0 \cf0 (time >= \cf6 9.0 \cf0 && time < \cf6 10.0\cf0 )\uc0\u8232         
+\f2\b \cf7 return 
+\f1\b0 \cf6 1\cf0 ;\uc0\u8232     
+\f2\b \cf7 else if
+\f1\b0 \cf0 (time >= \cf6 10.0 \cf0 && time < \cf6 11.0\cf0 )\uc0\u8232         
+\f2\b \cf7 return 
+\f1\b0 \cf6 2\cf0 ;\uc0\u8232     
+\f2\b \cf7 else if
+\f1\b0 \cf0 (time >= \cf6 11.0 \cf0 && time < \cf6 12.0\cf0 )\uc0\u8232         
+\f2\b \cf7 return 
+\f1\b0 \cf6 3\cf0 ;\uc0\u8232     
+\f2\b \cf7 else if
+\f1\b0 \cf0 (time >= \cf6 12.0 \cf0 && time < \cf6 13.0\cf0 )\uc0\u8232         
+\f2\b \cf7 return 
+\f1\b0 \cf6 4\cf0 ;\uc0\u8232     
+\f2\b \cf7 else if
+\f1\b0 \cf0 (time >= \cf6 13.0 \cf0 && time < \cf6 14.0\cf0 )\uc0\u8232         
+\f2\b \cf7 return 
+\f1\b0 \cf6 5\cf0 ;\uc0\u8232     
+\f2\b \cf7 else if
+\f1\b0 \cf0 (time >= \cf6 14.0 \cf0 && time < \cf6 15.0\cf0 )\uc0\u8232         
+\f2\b \cf7 return 
+\f1\b0 \cf6 6\cf0 ;\uc0\u8232     
+\f2\b \cf7 else if
+\f1\b0 \cf0 (time >= \cf6 15.0 \cf0 && time < \cf6 16.0\cf0 )\uc0\u8232         
+\f2\b \cf7 return 
+\f1\b0 \cf6 7\cf0 ;\uc0\u8232     
+\f2\b \cf7 else if
+\f1\b0 \cf0 (time >= \cf6 16.0 \cf0 && time < \cf6 17.0\cf0 )\uc0\u8232         
+\f2\b \cf7 return 
+\f1\b0 \cf6 8\cf0 ;\uc0\u8232     
+\f2\b \cf7 else\uc0\u8232         return 
+\f1\b0 \cf0 -\cf6 1\cf0 ;\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf7 void 
+\f1\b0 \cf0 fillClockArray(
+\f2\b \cf5 bool 
+\f1\b0 \cf0 clk[], 
+\f2\b \cf7 double 
+\f1\b0 \cf0 start, 
+\f2\b \cf7 double 
+\f1\b0 \cf0 finish)\{\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 stAddress = getAddressForClock(start), fnAddress = getAddressForClock(finish), i = \cf6 0\cf0 ;\uc0\u8232     
+\f2\b \cf7 for
+\f1\b0 \cf0 (i = stAddress; i <= fnAddress; i++)\{\uc0\u8232         clk[i] = 
+\f2\b \cf5 true
+\f1\b0 \cf0 ;\uc0\u8232     \}\u8232 \}\u8232 \u8232 
+\f2\b \cf5 bool 
+\f1\b0 \cf0 isNotConflict(
+\f2\b \cf5 bool 
+\f1\b0 \cf0 clk[
+\f2\b \cf5 CLOCKARRAYSIZE
+\f1\b0 \cf0 ], 
+\f2\b \cf7 int 
+\f1\b0 \cf0 addressOfcrs, \cf10 course_t \cf0 ocrss[])\{\uc0\u8232     
+\f0\i \cf2 //return true;\uc0\u8232 \u8232     
+\f2\i0\b \cf7 if
+\f1\b0 \cf0 (addressOfcrs < \cf6 0\cf0 )\uc0\u8232         
+\f2\b \cf7 return \cf5 false
+\f1\b0 \cf0 ;\uc0\u8232 \u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 i = \cf6 0\cf0 ;\uc0\u8232     
+\f2\b \cf7 double 
+\f1\b0 \cf0 start = ocrss[addressOfcrs].\cf9 startTime\cf0 ;\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 stAddress = getAddressForClock(start);\uc0\u8232 \u8232     
+\f2\b \cf7 double 
+\f1\b0 \cf0 finish = ocrss[addressOfcrs].\cf9 finishTime\cf0 ;\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 fnAddress = getAddressForClock(finish);\uc0\u8232 \u8232     
+\f2\b \cf7 if
+\f1\b0 \cf0 (start >= finish)\uc0\u8232         
+\f2\b \cf7 return \cf5 false
+\f1\b0 \cf0 ;\uc0\u8232 \u8232     
+\f2\b \cf7 for
+\f1\b0 \cf0 (i = stAddress; i <= fnAddress; i++)\{   
+\f0\i \cf2 //checks every element it needs to be empty so it makes sure there will be no conflicts\uc0\u8232         
+\f2\i0\b \cf7 if
+\f1\b0 \cf0 (clk[i] == 
+\f2\b \cf5 true
+\f1\b0 \cf0 )\uc0\u8232             
+\f2\b \cf7 return \cf5 false
+\f1\b0 \cf0 ;\uc0\u8232 \u8232     \}\u8232 \u8232     fillClockArray(clk, start, finish);\u8232     
+\f2\b \cf7 return \cf5 true
+\f1\b0 \cf0 ;\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf7 void 
+\f1\b0 \cf0 fillStudentsLinkedListFromFile(\cf10 course_t \cf0 coursesArray[], \cf10 FILE \cf0 *studentsFile, 
+\f2\b \cf7 int 
+\f1\b0 \cf0 numberOfCourses, 
+\f2\b \cf7 int 
+\f1\b0 \cf0 numberOfStudents, \cf10 List \cf0 miniStudentList)\{\uc0\u8232 \u8232     
+\f2\b \cf7 char 
+\f1\b0 \cf0 studentsStringArray[numberOfStudents][
+\f2\b \cf5 SCANNEDSTRINGMAXLENGTH
+\f1\b0 \cf0 ];\uc0\u8232     getFromFile(studentsFile, studentsStringArray);\u8232 \u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 numberOfCoursesRegistered = \cf6 0\cf0 ;\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 j = \cf6 0\cf0 ;\uc0\u8232     
+\f2\b \cf5 bool 
+\f1\b0 \cf0 clocks[
+\f2\b \cf5 CLOCKARRAYSIZE
+\f1\b0 \cf0 ];\uc0\u8232     initiateClockArray(clocks);\u8232 \u8232     \cf10 Position \cf0 p = miniStudentList;   
+\f0\i \cf2 //to store a list of students and the addresses of their courses for easier access when making reports\uc0\u8232 \u8232     
+\f2\i0\b \cf7 for
+\f1\b0 \cf0 (j = \cf6 0\cf0 ; j < numberOfStudents; j++)\{\uc0\u8232         numberOfCoursesRegistered = \cf6 0\cf0 ;\uc0\u8232         
+\f2\b \cf7 char 
+\f1\b0 \cf0 *token2;\uc0\u8232         
+\f2\b \cf7 char 
+\f1\b0 \cf0 nameTemp[
+\f2\b \cf5 STUDENTNAMELENGTH
+\f1\b0 \cf0 ];\uc0\u8232         
+\f2\b \cf7 int 
+\f1\b0 \cf0 idTemp;\uc0\u8232 \u8232         
+\f0\i \cf2 //miniStudentList[j].numberOfCoursesRegistered = 0;\uc0\u8232 \u8232 \u8232         
+\f1\i0 \cf0 token2 = strtok(studentsStringArray[j], 
+\f2\b \cf4 "#"
+\f1\b0 \cf0 );\uc0\u8232         
+\f2\b \cf5 strcpy
+\f1\b0 \cf0 (nameTemp, token2);\uc0\u8232         
+\f0\i \cf2 //strcpy(miniStudentList[j].name, nameTemp);\uc0\u8232 \u8232         //puts(nameTemp);\u8232 \u8232         
+\f1\i0 \cf0 token2 = strtok(
+\f2\b \cf5 NULL
+\f1\b0 \cf0 , 
+\f2\b \cf4 "#"
+\f1\b0 \cf0 );\uc0\u8232         idTemp = atoi(token2);   
+\f0\i \cf2 //atoi converts from string to integer\uc0\u8232         //miniStudentList[j].id = idTemp;\u8232 \u8232         
+\f1\i0 \cf0 insertLast(miniStudentList, nameTemp, idTemp);\uc0\u8232         
+\f0\i \cf2 //insertSorted(miniStudentList, nameTemp, idTemp);\uc0\u8232         //p = miniStudentList;\u8232 \u8232         
+\f1\i0 \cf10 Position \cf0 t = p->\cf9 next\cf0 ;\uc0\u8232         t->\cf9 numberOfCoursesRegistered \cf0 = \cf6 0\cf0 ;\uc0\u8232 \u8232         token2 = strtok(
+\f2\b \cf5 NULL
+\f1\b0 \cf0 , 
+\f2\b \cf4 "#"
+\f1\b0 \cf0 );\uc0\u8232         
+\f2\b \cf7 while
+\f1\b0 \cf0 (token2 != 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 )\{\uc0\u8232             removeSpace(token2);\u8232             removeNewLine(token2);\u8232             
+\f0\i \cf2 //puts(token2);\uc0\u8232             
+\f2\i0\b \cf7 int 
+\f1\b0 \cf0 indexOfAddress = findAddressOfCourse(token2,coursesArray, numberOfCourses);\uc0\u8232 \u8232             
+\f2\b \cf7 if
+\f1\b0 \cf0 (numberOfCoursesRegistered < \cf6 5 \cf0 && isCourseOffered(token2, coursesArray, numberOfCourses) && isAllowedToRegister(idTemp, indexOfAddress, coursesArray) && (studentsInCourse(coursesArray[indexOfAddress].\cf9 students\cf0 ) < maxStudentsInCourse(indexOfAddress, coursesArray)) && isNotConflict(clocks, indexOfAddress, coursesArray))\{\uc0\u8232                 insertSorted(coursesArray[indexOfAddress].\cf9 students\cf0 , nameTemp, idTemp);\uc0\u8232                 
+\f0\i \cf2 //puts("*********");    //for testing and analysis\uc0\u8232                 //miniStudentList[j].coursesIndexes[numberOfCoursesRegistered] = indexOfAddress;\u8232                 
+\f1\i0 \cf0 t->\cf9 coursesIndexes\cf0 [numberOfCoursesRegistered] = indexOfAddress;\uc0\u8232 \u8232                 numberOfCoursesRegistered++;\u8232                 
+\f0\i \cf2 //miniStudentList[j].numberOfCoursesRegistered = numberOfCoursesRegistered;\uc0\u8232                 
+\f1\i0 \cf0 t->\cf9 numberOfCoursesRegistered \cf0 = numberOfCoursesRegistered;\uc0\u8232 \u8232                 
+\f2\b \cf7 if
+\f1\b0 \cf0 (numberOfCoursesRegistered == \cf6 5\cf0 )\uc0\u8232                     
+\f2\b \cf7 break
+\f1\b0 \cf0 ;\uc0\u8232             \}\u8232             token2 = strtok(
+\f2\b \cf5 NULL
+\f1\b0 \cf0 , 
+\f2\b \cf4 "#"
+\f1\b0 \cf0 );\uc0\u8232 \u8232         \}\u8232         initiateClockArray(clocks);   
+\f0\i \cf2 //re-empties the clock array so it can deal with the next student\uc0\u8232         
+\f1\i0 \cf0 p = p->\cf9 next\cf0 ;\uc0\u8232     \}\u8232 \}\u8232 \u8232 \cf10 List \cf0 newHead()\{\uc0\u8232     \cf10 List \cf0 head = (\cf10 List\cf0 ) malloc(
+\f2\b \cf7 sizeof
+\f1\b0 \cf0 (\cf10 student_t\cf0 ));\uc0\u8232     
+\f2\b \cf7 if
+\f1\b0 \cf0 (head == 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 )\{\uc0\u8232         printf(
+\f2\b \cf4 "OUT OF RAM! malloc realted error.\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232         
+\f2\b \cf7 return \cf5 NULL
+\f1\b0 \cf0 ;\uc0\u8232     \}\u8232     head->\cf9 next \cf0 = 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 ;\uc0\u8232     
+\f2\b \cf7 return 
+\f1\b0 \cf0 head;\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf5 bool 
+\f1\b0 \cf0 isEmpty(\cf10 List \cf0 L) \{\uc0\u8232     
+\f2\b \cf7 return 
+\f1\b0 \cf0 (L->\cf9 next \cf0 == 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 );\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf5 bool 
+\f1\b0 \cf0 isLast(\cf10 Position \cf0 p)\{\uc0\u8232     
+\f2\b \cf7 return 
+\f1\b0 \cf0 (p->\cf9 next \cf0 == 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 );\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf7 void 
+\f1\b0 \cf0 deleteList(\cf10 List \cf0 L)\{\uc0\u8232     \cf10 Position \cf0 p, temp;\uc0\u8232     p = L->\cf9 next\cf0 ;\uc0\u8232     
+\f2\b \cf7 while
+\f1\b0 \cf0 (p != 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 )\{\uc0\u8232         temp = p->\cf9 next\cf0 ;\uc0\u8232         free(p);           
+\f0\i \cf2 //so it frees every node from memory\uc0\u8232         
+\f1\i0 \cf0 p = temp;\uc0\u8232     \}\u8232     L->\cf9 next \cf0 = 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 ;\uc0\u8232 \}\u8232 \u8232 \cf10 Position \cf0 newNode(
+\f2\b \cf7 char 
+\f1\b0 \cf0 name[], 
+\f2\b \cf7 int 
+\f1\b0 \cf0 id)\{\uc0\u8232     \cf10 Position \cf0 new;\uc0\u8232     new = (\cf10 Position\cf0 ) malloc(
+\f2\b \cf7 sizeof
+\f1\b0 \cf0 (\cf10 student_t\cf0 ));\uc0\u8232     
+\f2\b \cf7 if
+\f1\b0 \cf0 (new == 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 )\{\uc0\u8232         printf(
+\f2\b \cf4 "OUT OF RAM! malloc realted error.\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232         
+\f2\b \cf7 return \cf5 NULL
+\f1\b0 \cf0 ;\uc0\u8232     \}\u8232     new->\cf9 id \cf0 = id;\uc0\u8232     
+\f2\b \cf5 strcpy
+\f1\b0 \cf0 (new->\cf9 name\cf0 , name);\uc0\u8232     new->\cf9 next \cf0 = 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 ;\uc0\u8232     
+\f2\b \cf7 return 
+\f1\b0 \cf0 new;\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf5 bool 
+\f1\b0 \cf0 insertFirst(\cf10 List \cf0 L, 
+\f2\b \cf7 char 
+\f1\b0 \cf0 name[
+\f2\b \cf5 STUDENTNAMELENGTH
+\f1\b0 \cf0 ], 
+\f2\b \cf7 int 
+\f1\b0 \cf0 id)\{\uc0\u8232     \cf10 Position \cf0 temp, p = L;\uc0\u8232     temp = (\cf10 student_t\cf0 *) malloc(
+\f2\b \cf7 sizeof
+\f1\b0 \cf0 (\cf10 student_t\cf0 ));\uc0\u8232     
+\f2\b \cf7 if
+\f1\b0 \cf0 (temp == 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 )\{\uc0\u8232         printf(
+\f2\b \cf4 "OUT OF RAM! malloc realted error.\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232         
+\f2\b \cf7 return \cf5 false
+\f1\b0 \cf0 ;\uc0\u8232     \}\u8232     temp->\cf9 id \cf0 = id;\uc0\u8232     
+\f2\b \cf5 strcpy
+\f1\b0 \cf0 (temp->\cf9 name\cf0 , name);\uc0\u8232     temp->\cf9 next \cf0 = p->\cf9 next\cf0 ;\uc0\u8232     p->\cf9 next \cf0 = temp;\uc0\u8232     
+\f2\b \cf7 return \cf5 true
+\f1\b0 \cf0 ;\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf5 bool 
+\f1\b0 \cf0 insertLast(\cf10 List \cf0 L, 
+\f2\b \cf7 char 
+\f1\b0 \cf0 name[], 
+\f2\b \cf7 int 
+\f1\b0 \cf0 id)\{\uc0\u8232     \cf10 Position \cf0 p = L, new = newNode(name, id);\uc0\u8232     
+\f2\b \cf7 if
+\f1\b0 \cf0 (new == 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 )\uc0\u8232         
+\f2\b \cf7 return \cf5 false
+\f1\b0 \cf0 ;\uc0\u8232     
+\f2\b \cf7 while
+\f1\b0 \cf0 (!isLast(p))\uc0\u8232         p = p->\cf9 next\cf0 ;\uc0\u8232     p->\cf9 next \cf0 = new;\uc0\u8232     new->\cf9 next \cf0 = 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 ;\uc0\u8232     
+\f2\b \cf7 return \cf5 true
+\f1\b0 \cf0 ;\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf5 bool 
+\f1\b0 \cf0 insertAfter(\cf10 Position \cf0 p, \cf10 Position \cf0 toAdd)\{\uc0\u8232     toAdd->\cf9 next \cf0 = p->\cf9 next\cf0 ;\uc0\u8232     p->\cf9 next \cf0 = toAdd;\uc0\u8232     
+\f2\b \cf7 return \cf5 true
+\f1\b0 \cf0 ;\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf5 bool 
+\f1\b0 \cf0 insertSorted(\cf10 List \cf0 L, 
+\f2\b \cf7 char 
+\f1\b0 \cf0 name[
+\f2\b \cf5 STUDENTNAMELENGTH
+\f1\b0 \cf0 ], 
+\f2\b \cf7 int 
+\f1\b0 \cf0 id)\{\uc0\u8232     
+\f2\b \cf7 if
+\f1\b0 \cf0 (isEmpty(L))\{\uc0\u8232         insertFirst(L, name, id);\u8232         
+\f2\b \cf7 return \cf5 true
+\f1\b0 \cf0 ;\uc0\u8232     \}\u8232 \u8232     \cf10 Position \cf0 p = L, toAdd;\uc0\u8232     toAdd = (\cf10 Position\cf0 ) malloc(
+\f2\b \cf7 sizeof
+\f1\b0 \cf0 (\cf10 student_t\cf0 ));\uc0\u8232     
+\f2\b \cf7 if
+\f1\b0 \cf0 (toAdd == 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 ) \{\uc0\u8232         printf(
+\f2\b \cf4 "OUT OF RAM! malloc related error.\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232         
+\f2\b \cf7 return \cf5 false
+\f1\b0 \cf0 ;\uc0\u8232     \}\u8232 \u8232     toAdd->\cf9 id \cf0 = id;\uc0\u8232     
+\f2\b \cf5 strcpy
+\f1\b0 \cf0 (toAdd->\cf9 name\cf0 , name);\uc0\u8232     
+\f2\b \cf7 while
+\f1\b0 \cf0 (p->\cf9 next \cf0 != 
+\f2\b \cf5 NULL 
+\f1\b0 \cf0 && ( strcmp(p->\cf9 next\cf0 ->\cf9 name\cf0 , name) < \cf6 0 \cf0 ))         
+\f0\i \cf2 //puts names starting from the smallest(A.B...) at first\uc0\u8232         
+\f1\i0 \cf0 p = p->\cf9 next\cf0 ;\uc0\u8232     insertAfter(p,toAdd);\u8232     
+\f2\b \cf7 return \cf5 true
+\f1\b0 \cf0 ;\uc0\u8232 \}\u8232 \u8232 \cf10 Position \cf0 findStudent(\cf10 List \cf0 L, 
+\f2\b \cf7 int 
+\f1\b0 \cf0 id)\{\uc0\u8232     \cf10 Position \cf0 p = L->\cf9 next\cf0 ;\uc0\u8232     
+\f2\b \cf7 while
+\f1\b0 \cf0 (p != 
+\f2\b \cf5 NULL 
+\f1\b0 \cf0 && p->\cf9 id \cf0 != id)\{\uc0\u8232         p = p->\cf9 next\cf0 ;\uc0\u8232     \}\u8232     
+\f2\b \cf7 return 
+\f1\b0 \cf0 p;\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf7 void 
+\f1\b0 \cf0 initiateBuckets(\cf10 List \cf0 buckets[])\{\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 i = \cf6 0\cf0 ;\uc0\u8232     
+\f2\b \cf7 for 
+\f1\b0 \cf0 (i = \cf6 0\cf0 ; i < \cf6 10\cf0 ; i++) \{\uc0\u8232         buckets[i] = newHead();\u8232     \}\u8232 \}\u8232 \u8232 
+\f2\b \cf7 void 
+\f1\b0 \cf0 emptyBuckets(\cf10 List \cf0 buckets[])\{\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 i = \cf6 0\cf0 ;\uc0\u8232     
+\f2\b \cf7 for
+\f1\b0 \cf0 (i = \cf6 0\cf0 ; i < \cf6 10\cf0 ; i++)\{\uc0\u8232         deleteList(buckets[i]);\u8232     \}\u8232 \}\u8232 \u8232 \cf10 List \cf0 radixMerge(\cf10 List \cf0 buckets[])\{\uc0\u8232     \cf10 List \cf0 head = newHead();\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 i = \cf6 0\cf0 ;\uc0\u8232 \u8232     
+\f2\b \cf7 for 
+\f1\b0 \cf0 (i = \cf6 0\cf0 ; i < \cf6 10\cf0 ; i++) \{\uc0\u8232         \cf10 Position \cf0 p = buckets[i]->\cf9 next\cf0 ;\uc0\u8232 \u8232         
+\f2\b \cf7 while
+\f1\b0 \cf0 (p != 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 )\{\uc0\u8232             insertLast(head, p->\cf9 name\cf0 , p->\cf9 id\cf0 );\uc0\u8232             p = p->\cf9 next\cf0 ;\uc0\u8232         \}\u8232 \u8232     \}\u8232 \u8232     emptyBuckets(buckets);                  
+\f0\i \cf2 //empties buckets for next use\uc0\u8232     
+\f2\i0\b \cf7 return 
+\f1\b0 \cf0 head;\uc0\u8232 \}\u8232 \u8232 \cf10 List \cf0 radixSortedList(\cf10 List \cf0 L, 
+\f2\b \cf7 int 
+\f1\b0 \cf0 maxLength)\{\uc0\u8232     \cf10 List \cf0 sorted = newHead();\uc0\u8232 \u8232     
+\f2\b \cf7 if
+\f1\b0 \cf0 (isEmpty(L))\{\uc0\u8232         
+\f2\b \cf7 return 
+\f1\b0 \cf0 sorted;\uc0\u8232     \}\u8232 \u8232     \cf10 Position \cf0 p = L->\cf9 next\cf0 ;\uc0\u8232 \u8232     
+\f0\i \cf2 //printf("******\\n*********\\n*********\\n");\uc0\u8232 \u8232     
+\f1\i0 \cf10 List \cf0 buckets[\cf6 10\cf0 ];\uc0\u8232     initiateBuckets(buckets);\u8232 \u8232 \u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 i = \cf6 0\cf0 , mod = \cf6 10\cf0 , div = \cf6 1\cf0 ;\uc0\u8232     
+\f2\b \cf7 for
+\f1\b0 \cf0 (i = \cf6 0\cf0 ; i < maxLength; i++)\{\uc0\u8232 \u8232         
+\f2\b \cf7 while
+\f1\b0 \cf0 (p != 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 )\{\uc0\u8232             
+\f2\b \cf7 int 
+\f1\b0 \cf0 number = (p->\cf9 id\cf0 )%mod;\uc0\u8232             number = number / div;\u8232             insertLast(buckets[number], p->\cf9 name\cf0 , p->\cf9 id\cf0 );\uc0\u8232             p = p->\cf9 next\cf0 ;\uc0\u8232         \}\u8232 \u8232 
+\f0\i \cf2 //        for (int j = 0; j < 10; ++j) \{       //for testing and analysis. i encourage you to uncomment it and see how radix sort does its magic!\uc0\u8232 //            printf("bucket %d: ",j);\u8232 //            printList(buckets[j]);\u8232 //        \}\u8232 //        printf("RunDOne\\n");\u8232 \u8232         
+\f1\i0 \cf0 deleteList(sorted);\uc0\u8232         sorted = radixMerge(buckets);\u8232         p = sorted->\cf9 next\cf0 ;\uc0\u8232 \u8232         mod*=\cf6 10\cf0 ;\uc0\u8232         div*=\cf6 10\cf0 ;\uc0\u8232 \u8232     \}\u8232 \u8232     
+\f2\b \cf7 return 
+\f1\b0 \cf0 sorted;\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf7 void 
+\f1\b0 \cf0 sortCourses(\cf10 course_t \cf0 sorted[], \cf10 course_t \cf0 ocrss[], 
+\f2\b \cf7 int 
+\f1\b0 \cf0 numberOfCourses)\{\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 i = \cf6 0\cf0 , j = \cf6 0\cf0 , q = \cf6 0\cf0 ;\uc0\u8232     \cf10 course_t \cf0 temp;\uc0\u8232     
+\f2\b \cf7 for 
+\f1\b0 \cf0 (i = \cf6 0\cf0 ; i < numberOfCourses; i++)\{\uc0\u8232         sorted[i] = ocrss[i];\u8232     \}\u8232 \u8232     
+\f2\b \cf7 for 
+\f1\b0 \cf0 (j = \cf6 0\cf0 ; j < numberOfCourses-\cf6 1\cf0 ; j++)\{         
+\f0\i \cf2 //uses bubble sort because radix sort is inefficient for small arrays/lists\uc0\u8232         
+\f2\i0\b \cf7 for 
+\f1\b0 \cf0 (q = j; q < numberOfCourses; q++)\{\uc0\u8232             
+\f2\b \cf7 if
+\f1\b0 \cf0 (sorted[j].\cf9 year \cf0 > sorted[q].\cf9 year\cf0 )\{\uc0\u8232                 temp = sorted[q];\u8232                 sorted[q] = sorted[j];\u8232                 sorted[j] = temp;\u8232             \}\u8232         \}\u8232     \}\u8232 \u8232 \}\u8232 \u8232 
+\f2\b \cf7 void 
+\f1\b0 \cf0 courseStudentsReport(\cf10 course_t \cf0 ocrss[], \cf10 FILE \cf0 *out, 
+\f2\b \cf7 int 
+\f1\b0 \cf0 numberOfCourses) \{\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 q = \cf6 0\cf0 ;\uc0\u8232     
+\f2\b \cf7 for
+\f1\b0 \cf0 (q = \cf6 0\cf0 ; q < numberOfCourses; q++) \{\uc0\u8232 \u8232         \cf10 List \cf0 substituteStudentList = radixSortedList(ocrss[q].\cf9 students\cf0 , \cf6 7\cf0 );\uc0\u8232         \cf10 Position \cf0 p = substituteStudentList->\cf9 next\cf0 ;\uc0\u8232 \u8232         fprintf(out, 
+\f2\b \cf4 "STUDENTS TABLE FOR \cf7 %s\cf4  COURSE: \cf7 \\n\cf4 "
+\f1\b0 \cf0 , ocrss[q].\cf9 name\cf0 );\uc0\u8232         fprintf(out, 
+\f2\b \cf4 "------------------------------------------------------\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232 \u8232         
+\f2\b \cf7 if 
+\f1\b0 \cf0 (isEmpty(substituteStudentList)) \{\uc0\u8232             fprintf(out, 
+\f2\b \cf4 "No Students Have Registered is This Course!\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232             fprintf(out, 
+\f2\b \cf4 "-----------------------------------------------------\cf7 \\n\\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232 \u8232         \} 
+\f2\b \cf7 else 
+\f1\b0 \cf0 \{\uc0\u8232             fprintf(out, 
+\f2\b \cf4 "ID \cf7 \\t\cf4 |\cf7 \\t\cf4  Name\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232             fprintf(out, 
+\f2\b \cf4 "------------------------------------------------------\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232 \u8232 \u8232             
+\f2\b \cf7 while 
+\f1\b0 \cf0 (p != 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 ) \{\uc0\u8232                 fprintf(out, 
+\f2\b \cf4 "\cf7 %d\cf4  |\cf7 \\t %s\\n\cf4 "
+\f1\b0 \cf0 , p->\cf9 id\cf0 , p->\cf9 name\cf0 );\uc0\u8232                 p = p->\cf9 next\cf0 ;\uc0\u8232             \}\u8232 \u8232             fprintf(out, 
+\f2\b \cf4 "------------------------------------------------------\cf7 \\n\\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232         \}\u8232     \}\u8232 \}\u8232 \u8232 \cf10 List \cf0 studentsUnion(\cf10 course_t \cf0 ocrss[], 
+\f2\b \cf7 int 
+\f1\b0 \cf0 numberOfCourses)\{\uc0\u8232     \cf10 List \cf0 allStudents = newHead();\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 i = \cf6 0\cf0 ;\uc0\u8232     \cf10 Position \cf0 p;\uc0\u8232     
+\f2\b \cf7 for 
+\f1\b0 \cf0 (i = \cf6 0\cf0 ; i < numberOfCourses; i++)\{\uc0\u8232         p = (ocrss[i].\cf9 students\cf0 )->\cf9 next\cf0 ;\uc0\u8232         
+\f2\b \cf7 while 
+\f1\b0 \cf0 (p != 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 )\{\uc0\u8232             
+\f2\b \cf7 if
+\f1\b0 \cf0 (isNotAddedBefore(allStudents, p->\cf9 id\cf0 )) \{\uc0\u8232                 insertSorted(allStudents, p->\cf9 name\cf0 , p->\cf9 id\cf0 );\uc0\u8232             \}\u8232             p = p->\cf9 next\cf0 ;\uc0\u8232         \}\u8232     \}\u8232     
+\f2\b \cf7 return 
+\f1\b0 \cf0 allStudents;\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf5 bool 
+\f1\b0 \cf0 isNotAddedBefore(\cf10 List \cf0 allStudents, 
+\f2\b \cf7 int 
+\f1\b0 \cf0 id)\{\uc0\u8232     \cf10 Position \cf0 p = allStudents->\cf9 next\cf0 ;\uc0\u8232     
+\f2\b \cf7 while 
+\f1\b0 \cf0 (p != 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 )\{\uc0\u8232         
+\f2\b \cf7 if
+\f1\b0 \cf0 (p->\cf9 id \cf0 == id)\{\uc0\u8232             
+\f2\b \cf7 return \cf5 false
+\f1\b0 \cf0 ;\uc0\u8232         \}\u8232         p = p->\cf9 next\cf0 ;\uc0\u8232     \}\u8232     
+\f2\b \cf7 return \cf5 true
+\f1\b0 \cf0 ;\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf7 void 
+\f1\b0 \cf0 allStudentsReport(\cf10 List \cf0 L, \cf10 FILE \cf0 *out)\{\uc0\u8232     \cf10 Position \cf0 p = L->\cf9 next\cf0 ;\uc0\u8232 \u8232     fprintf(out, 
+\f2\b \cf4 "ALL STUDENTS IN ALL COURSES\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232     fprintf(out, 
+\f2\b \cf4 "---------------------------------\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232 \u8232     
+\f2\b \cf7 if 
+\f1\b0 \cf0 (isEmpty(L)) \{\uc0\u8232         fprintf(out, 
+\f2\b \cf4 "No Students Have Registered This semester!\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232         fprintf(out, 
+\f2\b \cf4 "--------------------------------\cf7 \\n\\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232     \} 
+\f2\b \cf7 else 
+\f1\b0 \cf0 \{\uc0\u8232         fprintf(out, 
+\f2\b \cf4 "ID \cf7 \\t\cf4 |\cf7 \\t\cf4  Name\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232         fprintf(out, 
+\f2\b \cf4 "---------------------------------\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232         
+\f2\b \cf7 while 
+\f1\b0 \cf0 (p != 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 )\{\uc0\u8232             fprintf(out, 
+\f2\b \cf4 "\cf7 %d\cf4  |\cf7 \\t%s\\n\cf4 "
+\f1\b0 \cf0 , p->\cf9 id\cf0 , p->\cf9 name\cf0 );\uc0\u8232             p = p->\cf9 next\cf0 ;\uc0\u8232         \}\u8232         fprintf(out, 
+\f2\b \cf4 "---------------------------------\cf7 \\n\\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232     \}\u8232 \}\u8232 \u8232 
+\f2\b \cf7 void 
+\f1\b0 \cf0 allCoursesReport(\cf10 course_t \cf0 courses[], \cf10 FILE \cf0 *out, 
+\f2\b \cf7 int 
+\f1\b0 \cf0 numberOfCourses)\{\uc0\u8232 \u8232     \cf10 course_t \cf0 sorted[numberOfCourses];\uc0\u8232     sortCourses(sorted, courses, numberOfCourses);\u8232 \u8232     fprintf(out, 
+\f2\b \cf4 "ALL COURSES\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232     fprintf(out, 
+\f2\b \cf4 "------------------------------------------------------------------\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232     fprintf(out, 
+\f2\b \cf4 "ID \cf7 \\t\cf4     | Name\cf7 \\t\\t\\t\cf4    |\cf7 \\t\cf4  Students Enrolled\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232     fprintf(out, 
+\f2\b \cf4 "------------------------------------------------------------------\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232     
+\f2\b \cf7 int  
+\f1\b0 \cf0 i = \cf6 0\cf0 ;\uc0\u8232     
+\f2\b \cf7 for 
+\f1\b0 \cf0 (i = \cf6 0\cf0 ; i < numberOfCourses; i++)\{\uc0\u8232         fprintf(out, 
+\f2\b \cf4 "\cf7 %s\cf4      | \cf7 %-28s\cf4  |\cf7 \\t %d\\n\cf4 "
+\f1\b0 \cf0 , sorted[i].\cf9 id\cf0 , sorted[i].\cf9 name\cf0 , studentsInCourse(sorted[i].\cf9 students\cf0 ));\uc0\u8232     \}\u8232     fprintf(out, 
+\f2\b \cf4 "------------------------------------------------------------------\cf7 \\n\\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf7 void 
+\f1\b0 \cf0 fillClockWithIndex(
+\f2\b \cf7 int 
+\f1\b0 \cf0 courseIndex[], 
+\f2\b \cf7 double 
+\f1\b0 \cf0 sttime, 
+\f2\b \cf7 double 
+\f1\b0 \cf0 fntime, 
+\f2\b \cf7 int 
+\f1\b0 \cf0 index)\{\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 start = getAddressForClock(sttime);\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 finish = getAddressForClock(fntime);\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 i = \cf6 0\cf0 ;\uc0\u8232     
+\f2\b \cf7 for 
+\f1\b0 \cf0 (i = start; i <= finish; i++)\{\uc0\u8232         courseIndex[i] = index;\u8232     \}\u8232 \}\u8232 \u8232 
+\f2\b \cf5 bool 
+\f1\b0 \cf0 studentScheduleReport(\cf10 FILE \cf0 *out, \cf10 course_t \cf0 ocrss[], \cf10 List \cf0 L, 
+\f2\b \cf7 int 
+\f1\b0 \cf0 id)\{\uc0\u8232     \cf10 Position \cf0 p = findStudent(L, id);\uc0\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 i = \cf6 0\cf0 ;\uc0\u8232 \u8232     
+\f2\b \cf7 if
+\f1\b0 \cf0 (p == 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 )\{\uc0\u8232         printf(
+\f2\b \cf4 "Student Not Enrolled into the system! re-check the number and try again:\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232         
+\f2\b \cf7 return \cf5 false
+\f1\b0 \cf0 ;\uc0\u8232     \}\u8232 \u8232     fprintf(out, 
+\f2\b \cf4 "Schedule For: \cf7 %s\\n\cf4 "
+\f1\b0 \cf0 , p->\cf9 name\cf0 );\uc0\u8232     fprintf(out, 
+\f2\b \cf4 "------------------------------------------------------------------------------\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232     fprintf(out, 
+\f2\b \cf4 "Hour:| 8     | 9     | 10    | 11    | 12    | 1pm   | 2pm   | 3pm   | 4pm   |\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232     fprintf(out, 
+\f2\b \cf4 "------------------------------------------------------------------------------\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232     
+\f2\b \cf5 bool 
+\f1\b0 \cf0 times[\cf6 9\cf0 ];\uc0\u8232     initiateClockArray(times);\u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 courseIndex[\cf6 9\cf0 ];\uc0\u8232 \u8232 \u8232     
+\f2\b \cf7 for 
+\f1\b0 \cf0 (i = \cf6 0\cf0 ; i < p->\cf9 numberOfCoursesRegistered\cf0 ; i++)\{\uc0\u8232         
+\f2\b \cf7 int 
+\f1\b0 \cf0 index = p->\cf9 coursesIndexes\cf0 [i];\uc0\u8232         fillClockArray(times, ocrss[index].\cf9 startTime\cf0 , ocrss[index].\cf9 finishTime\cf0 );\uc0\u8232         
+\f0\i \cf2 //int where = getAddressForClock(ocrss[index].startTime);\uc0\u8232         //courseIndex[where] = index;\u8232         
+\f1\i0 \cf0 fillClockWithIndex(courseIndex, ocrss[index].\cf9 startTime\cf0 , ocrss[index].\cf9 finishTime\cf0 , index);\uc0\u8232     \}\u8232 \u8232     fprintf(out, 
+\f2\b \cf4 "     |"
+\f1\b0 \cf0 );\uc0\u8232 \u8232     
+\f2\b \cf7 for 
+\f1\b0 \cf0 (i = \cf6 0\cf0 ; i < \cf6 9\cf0 ; i++)\{\uc0\u8232         
+\f2\b \cf7 if
+\f1\b0 \cf0 (times[i])\{\uc0\u8232             fprintf(out, 
+\f2\b \cf4 "\cf7 %s\cf4 |"
+\f1\b0 \cf0 , ocrss[courseIndex[i]].\cf9 id\cf0 );    
+\f0\i \cf2 //a course is assumed to be 7 letters only "COMP" followed by 3 letters\uc0\u8232         
+\f1\i0 \cf0 \}
+\f2\b \cf7 else
+\f1\b0 \cf0 \{\uc0\u8232             fprintf(out, 
+\f2\b \cf4 "       |"
+\f1\b0 \cf0 );                         
+\f0\i \cf2 //so 7 spaces is whats used\uc0\u8232         
+\f1\i0 \cf0 \}\uc0\u8232     \}\u8232 \u8232     fprintf(out, 
+\f2\b \cf4 "\cf7 \\n\cf4 ------------------------------------------------------------------------------\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232     
+\f2\b \cf7 return \cf5 true
+\f1\b0 \cf0 ;\uc0\u8232 \}\u8232 \u8232 
+\f2\b \cf7 int 
+\f1\b0 \cf0 openMenu()\{\uc0\u8232 \u8232     \cf10 FILE \cf0 *coursesFile, *studentsFile, *reportFile;\uc0\u8232 \u8232 
+\f0\i \cf2 //    char cfile[PATHLENGTH], sfile[PATHLENGTH], rfile[PATHLENGTH];\uc0\u8232 //\u8232 //    printf("Wellcome to the student registration gate!\\nPlease enter the complete path for the file that has the courses:");\u8232 //    scanf("%s", cfile);\u8232 //    printf("Great! now enter the path for the students file:");\u8232 //    scanf(" %s", sfile);\u8232 //    printf("And where do you want your output file to be?");\u8232 //    scanf("%s", rfile);\u8232 //\u8232 //    coursesFile = fopen(cfile,"r");\u8232 //    studentsFile = fopen(sfile, "r");\u8232 //    reportFile = fopen(rfile,"w");\u8232 \u8232     
+\f1\i0 \cf0 coursesFile = fopen(
+\f2\b \cf4 "/Users/AhmadSawi/Desktop/Data Structures/Project1/Courses.txt"
+\f1\b0 \cf0 ,
+\f2\b \cf4 "r"
+\f1\b0 \cf0 );\uc0\u8232     studentsFile = fopen(
+\f2\b \cf4 "/Users/AhmadSawi/Desktop/Data Structures/Project1/Students.txt"
+\f1\b0 \cf0 , 
+\f2\b \cf4 "r"
+\f1\b0 \cf0 );\uc0\u8232     reportFile = fopen(
+\f2\b \cf4 "/Users/AhmadSawi/Desktop/Data Structures/Project1/Reports.txt"
+\f1\b0 \cf0 ,
+\f2\b \cf4 "w"
+\f1\b0 \cf0 );\uc0\u8232 \u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 numberOfCourses = fileLineCount(coursesFile);    
+\f0\i \cf2 //to house the array size to be used a lot afterwards\uc0\u8232     
+\f2\i0\b \cf7 int 
+\f1\b0 \cf0 numberOfStudents = fileLineCount(studentsFile);\uc0\u8232 \u8232     \cf10 course_t \cf0 coursesArray[numberOfCourses];\uc0\u8232 \u8232     fillCourseArrayFromFile(coursesArray, coursesFile, numberOfCourses);\u8232 \u8232     removeNonCOMPCourses(coursesArray, &numberOfCourses);\u8232 \u8232     \cf10 List \cf0 miniStudentList = (\cf10 List\cf0 ) malloc(
+\f2\b \cf7 sizeof
+\f1\b0 \cf0 (\cf10 student_t\cf0 ));    
+\f0\i \cf2 //the List that has the students and their courses for easy access and shorter run times\uc0\u8232     
+\f1\i0 \cf0 miniStudentList->\cf9 next \cf0 = 
+\f2\b \cf5 NULL
+\f1\b0 \cf0 ;\uc0\u8232 \u8232     fillStudentsLinkedListFromFile(coursesArray, studentsFile, numberOfCourses, numberOfStudents, miniStudentList);\u8232 \u8232     courseStudentsReport(coursesArray, reportFile, numberOfCourses);\u8232 \u8232     \cf10 List \cf0 allStudents = studentsUnion(coursesArray, numberOfCourses);\uc0\u8232 \u8232     allStudentsReport(allStudents, reportFile);\u8232     allCoursesReport(coursesArray, reportFile, numberOfCourses);\u8232 \u8232     
+\f2\b \cf7 int 
+\f1\b0 \cf0 stid;\uc0\u8232     printf(
+\f2\b \cf4 "Enter the ID of the student you want to have his scedule at the end of the Report file:\cf7 \\n\cf4 "
+\f1\b0 \cf0 );\uc0\u8232 \u8232     scanf(
+\f2\b \cf4 "\cf7 %d\cf4 "
+\f1\b0 \cf0 , &stid);\uc0\u8232     
+\f2\b \cf5 bool 
+\f1\b0 \cf0 check = studentScheduleReport(reportFile, coursesArray, miniStudentList, stid);\uc0\u8232 \u8232     
+\f2\b \cf7 while
+\f1\b0 \cf0 (!check)\{    
+\f0\i \cf2 //to make sure number entered goes back to a student\uc0\u8232         
+\f1\i0 \cf0 scanf(
+\f2\b \cf4 "\cf7 %d\cf4 "
+\f1\b0 \cf0 , &stid);\uc0\u8232         check = studentScheduleReport(reportFile, coursesArray, miniStudentList, stid);\u8232     \}\u8232 \u8232     printf(
+\f2\b \cf4 "You're all done, go check the Reports.txt file for output"
+\f1\b0 \cf0 );\uc0\u8232     fclose(reportFile);            
+\f0\i \cf2 //closig this file only because all input files were closed in the function that gets data from them\uc0\u8232     
+\f2\i0\b \cf7 return 
+\f1\b0 \cf6 0\cf0 ;\uc0\u8232 \}\
+}
